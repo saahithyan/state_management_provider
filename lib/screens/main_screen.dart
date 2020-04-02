@@ -5,6 +5,7 @@ import 'package:state_management_provider/providers/text_provider.dart';
 import 'package:state_management_provider/screens/another.dart';
 import 'package:state_management_provider/screens/level1.dart';
 import 'package:state_management_provider/widgets/app_bar_title.dart';
+import 'package:state_management_provider/widgets/button.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class MainScreen extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter with Provider',
 //        home: ,
-      initialRoute: Main.id,
+        initialRoute: Main.id,
         routes: {
           Main.id: (_) => Main(),
           Another.id: (_) => Another(),
@@ -34,7 +35,22 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: AppBarTitle()),
-      body: Level1(),
+      body: Column(
+        children: <Widget>[
+          Level1(),
+          Button(
+            label: 'Click Me',
+            icon: Icons.code,
+            onClick: () {
+              final provider = Provider.of<AppBarProvider>(
+                context,
+                listen: false,
+              );
+              print(provider.appBarTitle);
+            },
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, Another.id),
         child: Icon(Icons.send),
@@ -42,4 +58,3 @@ class Main extends StatelessWidget {
     );
   }
 }
-
